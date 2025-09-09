@@ -1,0 +1,63 @@
+https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/
+
+my soln c++
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+      int n = nums.size();
+      int drop = 0;
+      for (int i=0;i<n;i++){
+         int *p1 = &nums[i];
+         int *p2 = &nums[(i+1)%n];
+         if (*p1>*p2){
+            drop++;
+            if (drop >1)return false;
+         } 
+      }
+      return true;
+        
+    }
+};
+
+
+go based
+
+func check(nums []int) bool {
+    drop:= 0
+    n := len(nums) // len i sinbuild fucntion of go
+    for i:=0;i<n;i++{
+        p1:= &nums[i] ///created a pointer
+        p2:= &nums[(i+1)%n]
+
+        if *p1 > *p2{ // derefencing
+            drop++
+            if drop >1 {
+                return false
+            }    
+        }
+    }
+    return true
+}
+
+unit test of go
+
+func TestChecksums(T*testing .T){
+    tests := struct {
+        names string
+        nums []int
+        expected bool
+    }{
+        {"sorted increasing", [] int{1,2,3,,4,5},true},
+        {"rotated sorted",[]int{3,4,5,1,2},true},
+        {"unsorted".[]int{2,1,3,4,5},false},
+        {"all equal",[]int{2,2,2,2,2},true},
+        {"single element", []int{10}, true},
+    }
+
+    for _ tt := range tests{ //looping through test case
+        got:= checksums(tt.nums) // paasing test case in function 
+        if got != tt.expected{
+            Errorof("%s: expected %v, got %v", tt.name, tt.expected, got)
+        }
+    }
+}
