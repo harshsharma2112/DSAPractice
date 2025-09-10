@@ -42,7 +42,8 @@ func check(nums []int) bool {
 unit test of go
 
 func TestChecksums(T*testing .T){
-    tests := struct {
+    // struct allow you to store in tabel format liek string int all together 
+    tests := []struct {
         names string
         nums []int
         expected bool
