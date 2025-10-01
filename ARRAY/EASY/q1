@@ -43,6 +43,12 @@ unit test of go
 
 func TestChecksums(T*testing .T){
     // struct allow you to store in tabel format liek string int all together 
+
+    In Go, a struct is just a way to group different fields (data) together. It is not related to interfaces or methods unless you explicitly use them.
+    Here, you use a struct in your test cases to keep related data (test name, input, expected output) together for each test case.
+    If you only need to store one value (like just the input slice), you can use a plain slice. But if you want to store multiple values per test case (like input and expected output), you need a struct.
+
+
     tests := []struct {
         names string
         nums []int

@@ -1,0 +1,154 @@
+//move all zeros to end
+https://leetcode.com/problems/move-zeroes/description/
+my approach:
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n=nums.size();
+        if(n==0){
+            return;
+        }
+      
+        int *p1 =&nums[0];
+        int *p2 = &nums[0];
+        
+        while(p2<&nums[n]){
+            if( *p2!=0){
+             std::swap(*p1, *p2);
+              p1++;
+
+            }
+            p2++;
+        }
+            
+        
+        
+    }
+};
+
+//given 
+//arr{0,1,0,3,12}->{1,3,12,0,0}
+//when not equal
+//arr{1,0,0,3}_>arr{1,3,0,0}_>{1,3,12,0,0}
+
+
+takeuforward:
+
+approach brute force:
+step1: take an aarray(temp) and stroe all the non zero in that 
+step2: Now till the size of temp put it back in original aary it will do overwrite in original array
+step3: in original array till it lenght put 0
+
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int N = nums.size();
+        vector<int>temp;
+        for(int i=0;i<N;i++){   -> time o(N)
+            if (nums[i]!=0){
+                temp.push_back(nums[i]);
+            }
+            
+        }
+        int n = temp.size();
+
+        for(int i=0;i<n;i++){. -> time is o(n)
+            nums[i]=temp[i];
+        }
+
+        for(int i=n;i<N;i++){.  ->time is O(N-n)
+            nums[i]=0;
+        }
+    }
+};
+total time O(2N)
+space is O(n) that can be max to  o(N)
+
+
+// optimal approach now
+2 pointer approach same like mine but striver used the indices which is liitle bit better
+
+step1: set one indices to -1
+step2: for loop with other indices and upate it to it if zero is there;
+step3: if no zero is found return
+step4: for loop for swap if non zero is found.
+
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int i = -1;
+        int n =nums.size();
+        for (int j=0;j<n;j++){->time is  o(n) like we iterate till we found 0
+            if(nums[j]==0){
+                i=j;
+                break;
+            }
+        }
+        if (i==-1){
+            return;
+        }
+        for (int j=i+1;j<n;j++){->time is  o(N-n)we iterate from we already found zero
+            if(nums[j]!=0){
+                swap(nums[i],nums[j]);
+                i++;
+            }
+           
+        }
+
+        
+    }
+};
+total time is O(N), space is O(1) becoz no other array is used.
+
+
+
+
+
+go based soln of optimal approach
+
+func moveZeroes(nums []int)  {
+//imp note:range is not used becoz that index and value which is not required here;
+    i:= -1
+    n:= len(nums)
+    for j:= 0;j<n;j++ {
+        if(nums[j]==0){
+            i=j
+            break
+        }
+    }
+
+    if(i== -1){
+        return;
+    }
+
+    for j:= i+1;j<n;j++ { 
+        if(nums[j]!=0){
+            nums[i],nums[j] = nums[j],nums[i]
+            i++
+        }
+    }
+    
+}
+
+
+
+unit test:
+
+func TestTwoPointer(t *testing.T) {
+    tests := []struct {
+        name   string
+        arrVal []int
+    }{
+        {"harsh", []int{1,0,3}},
+    }
+
+    for _, tt := range tests {
+        got := twoPointer(tt.arrVal)
+        // compare got with expected value
+        // if got != tt.expected {
+        //     t.Errorf("%s: expected %v, got %v", tt.name, tt.expected, got)
+        // }
+    }
+}

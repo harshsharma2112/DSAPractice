@@ -1,0 +1,115 @@
+//letf rotation menas anti clocke wise simple hai in left rotattation means 
+right roatation is clockwise 
+if we sya roatte by 1 onec of this arr={1,2,3,4,5} it will be this { 2,3,4,5,1}
+brute force: be like we take one more extra array and do in that 
+
+//so the rough code is like  for moving one place by left rotation
+temp =arr[0];
+for (int i=0: i<n; i++){
+    arr[i-1]=arr[i];
+    
+}
+arr[n-1]=temp;    o(n) time, space is o(1) we did not use any etra aarya but we have the use the exist array so we can say o(n)
+
+//right rotation by one
+https://www.geeksforgeeks.org/problems/cyclically-rotate-an-array-by-one2614/1
+// User function Template for C++
+
+class Solution {
+  public:
+    void rotate(vector<int> &arr) {
+        int n = arr.size();
+        if(n==0){
+            return;
+        }
+       int temp = arr[n-1];
+       for(int i=n-1;i>0;i--){
+           arr[i]=arr[i-1];
+       }
+    arr[0]= temp;
+    }
+};
+
+//left rotatate array by D places
+//brute approach
+same like above take a temp and store and do the shift
+eg: arr[1,2,,3,4,5,6,7]  d=3
+// to store in temp
+for (i=0:i<d;i++){
+    temp[i]=arr[i]      //time is o(d)
+}
+temp= [1,2,3]
+
+for(i=d;i<n;i++){                      // time is o(n-d)
+    arr[i-d]=arr[i]
+}
+now put back temp 
+for(i=n-d;i<n;i++){           //time is o(d)
+    arr[i]=temp[i-(n-d)];
+}
+  // total time is o(n+d)
+  //space is o(d)we using temp to store
+//left rotate
+https://www.geeksforgeeks.org/problems/rotate-array-by-n-elements-1587115621/1
+class Solution {
+  public:
+
+    // Function to rotate an array by d elements in counter-clockwise direction.
+    void rotateArr(vector<int>& arr, int d) {
+        // code here
+        int n= arr.size();
+        if(n==0){
+            return;
+        }
+        d= d%n;
+        vector<int>temp(d);
+        for(int i=0;i<d;i++){
+            temp[i]=arr[i];
+        }
+        
+        for (int i=d;i<n;i++){
+            arr[i-d]=arr[i];
+        }
+        
+         for (int i = 0; i < d; i++) {
+            arr[n - d + i] = temp[i];
+        }
+    }
+};
+
+//optimal approach no better
+//left rotate by d places
+arr[1,2,3,4,5,6,7] d=2
+so 1st step reverse arr[1,2]=arr[2,1]. time is o(d)
+2nd step is reverse rest array [3,4,5,6,7]=arr[7,6,5,4,3] o(n-d)
+now after step1 and step2 array is [2,1,7,6,5,4,3] now reverse this whole 
+final arr[ 3,4,5,6,7,1,2] time is o (n)
+total space is o(2n)
+SC is o(1)no other space is used here
+
+so here what we do 
+reverse(arr,arr+d)
+reverse(arr+d),arr+n)
+reverese(arr,arr+n)
+
+//optimal right by d place
+https://leetcode.com/problems/rotate-array/
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        if (n == 0) return;
+
+        k = k % n;
+
+        // Step 1: reverse whole array
+        reverse(nums.begin(), nums.end());
+
+        // Step 2: reverse first k elements
+        reverse(nums.begin(), nums.begin() + k);
+
+        // Step 3: reverse last n-k elements
+        reverse(nums.begin() + k, nums.end());
+    }
+};
